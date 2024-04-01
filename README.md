@@ -1,2 +1,3 @@
-# Mine-Sweeper-3D
-Mine Sweeper but 3D
+# NSI Project
+
+Final project for NSI Class 1ere 2024
