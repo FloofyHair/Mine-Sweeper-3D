@@ -1,0 +1,41 @@
+body {
+    background-color: #000012;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Grid CSS */
+#grid {
+    width: 80vw;
+
+    aspect-ratio: 1;
+
+    border: #fff 3px solid;
+    border-radius: 10px;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    position: absolute;
+    overflow: hidden;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.cell { 
+    aspect-ratio: 1;
+    width: 10%;
+
+    border: #fff 1px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
