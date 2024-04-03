@@ -10,7 +10,7 @@ body {
 
 /* Grid CSS */
 #grid {
-    width: 80vw;
+    height: 80vh;
 
     aspect-ratio: 1;
 
@@ -32,10 +32,12 @@ body {
 
 .cell { 
     aspect-ratio: 1;
-    width: 10%;
+    width: 100%;
 
     border: #fff 1px solid;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    cursor: pointer;
 }
