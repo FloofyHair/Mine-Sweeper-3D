@@ -1,5 +1,5 @@
-const width = 20;
-const height = 10;
+const width = 5;
+const height = 5;
 
 const dX = [1, 1, 0, -1, -1, -1,  0,  1];
 const dY = [0, 1, 1,  1,  0, -1, -1, -1];
@@ -48,7 +48,7 @@ function getGridNumbers(mine_grid){
 }
 
 function validCell(x, y){
-    return (x > 0 || x < width || y > 0 || y < height)
+    return ((x >= 0) && (x < width) && (y >= 0) && (y < height))
 }
 function numNeighbors(grid, x, y){
     num = 0
@@ -56,8 +56,25 @@ function numNeighbors(grid, x, y){
         dx = x+dX[n];
         dy = y+dY[n];
         if(validCell(dx,dy)){
-            num += grid[y][x]
+            num += grid[dy][dx]
         }
     }
     return num
 }
+
+function logB(board){
+    board.forEach(row => {
+        x = ''
+        row.forEach(n=>{
+            x+=n
+            x+=' '
+        })
+        console.log(x)
+    });
+    console.log()
+}
+
+board = generateBoard(6)
+numbers = getGridNumbers(board)
+logB(board)
+logB(numbers)
