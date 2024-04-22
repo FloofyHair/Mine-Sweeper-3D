@@ -108,10 +108,13 @@ function createGrid(height, width, mines) {
     }
 }
 
-
+firstTime = true;
 function click(cell) {
     console.log(cell.id);
 
-    updateMines(10); // Initialize mines
-    incrementTimer(); // Initialize timer
+    if (firstTime) {
+        firstTime = false;
+        updateMines(10); // Initialize mines
+        incrementTimer(); // Initialize timer
+    }
 }
