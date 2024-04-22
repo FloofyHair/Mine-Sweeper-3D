@@ -41,7 +41,7 @@ function incrementTimer() {
     tens = Math.floor(timerValue/10)%10;
     hundreds = Math.floor(timerValue/100)%10;
   
-    console.log(`${timerValue}, ${ones}, ${tens}, ${hundreds}`);
+    //console.log(`${timerValue}, ${ones}, ${tens}, ${hundreds}`);
   
     digits[0].style.transform = `translate(0, ${ones * -5.75}rem)`;
     digits[1].style.transform = `translate(0, ${tens * -5.75}rem)`;
@@ -57,7 +57,7 @@ function updateMines(minesValue) {
     ones = Math.floor(minesValue/1)%10;
     tens = Math.floor(minesValue/10)%10;
   
-    console.log(`${minesValue}, ${ones}, ${tens}`);
+    //console.log(`${minesValue}, ${ones}, ${tens}`);
   
     digits[0].style.transform = `translate(0, ${ones * -5.75}rem)`;
     digits[1].style.transform = `translate(0, ${tens * -5.75}rem)`;
