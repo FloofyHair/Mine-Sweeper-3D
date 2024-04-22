@@ -6,8 +6,8 @@ values = [
 ]
 
 mask = [
-    [0, 0, 1, 1],
-    [1, 1, 1, 1],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
     [0, 0, 0, 0]
 ]
 
@@ -30,8 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function updateGrid(height, width, mask) {
-    for (let i = 0; i < height; i++) {
-        for (let j = 0; j < width; j++) {
+    for (let i = 0; i <= height; i++) {
+        for (let j = 0; j <= width; j++) {
             console.log(i, j);
             const cell = document.getElementById(i + "-" + j);
             cell.innerHTML = mask[i][j] & 1 ? values[i][j] : "";
@@ -67,7 +67,7 @@ function createGrid(height, width, mines) {
             cell.addEventListener("click", click.bind(null, cell));
             
             cell.style.width = 100 / width + "%";
-            cell.style.fontSize = 300 / width + "px";
+            cell.style.fontSize = 600 / width + "px";
 
             row.appendChild(cell);
         }
