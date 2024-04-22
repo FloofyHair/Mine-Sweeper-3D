@@ -25,9 +25,43 @@ colorMap = {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    createGrid(4, 3, values);
-    updateGrid(4, 3, mask);
+    createGrid(10, 10, values);
+    updateGrid(10, 10, mask);
+    
 });
+
+timerValue = 0;
+function incrementTimer() {
+    timer = document.getElementById("timer");
+    digits = timer.children;
+
+    timerValue++;
+  
+    ones = Math.floor(timerValue/1)%10;
+    tens = Math.floor(timerValue/10)%10;
+    hundreds = Math.floor(timerValue/100)%10;
+  
+    console.log(`${timerValue}, ${ones}, ${tens}, ${hundreds}`);
+  
+    digits[0].style.transform = `translate(0, ${ones * -5.75}rem)`;
+    digits[1].style.transform = `translate(0, ${tens * -5.75}rem)`;
+    digits[2].style.transform = `translate(0, ${hundreds * -5.75}rem)`;
+
+    setTimeout(incrementTimer, 1000);
+}
+
+function updateMines(minesValue) {
+    mines = document.getElementById("mines");
+    digits = mines.children;
+
+    ones = Math.floor(minesValue/1)%10;
+    tens = Math.floor(minesValue/10)%10;
+  
+    console.log(`${minesValue}, ${ones}, ${tens}`);
+  
+    digits[0].style.transform = `translate(0, ${ones * -5.75}rem)`;
+    digits[1].style.transform = `translate(0, ${tens * -5.75}rem)`;
+}
 
 function updateGrid(height, width, mask) {
     for (let i = 0; i <= height; i++) {
@@ -74,6 +108,10 @@ function createGrid(height, width, mines) {
     }
 }
 
+
 function click(cell) {
     console.log(cell.id);
+
+    updateMines(10); // Initialize mines
+    incrementTimer(); // Initialize timer
 }
