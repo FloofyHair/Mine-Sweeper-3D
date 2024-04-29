@@ -1,6 +1,6 @@
 const width = 20;
 const height = 10;
-
+const initialMines = 1;
 const dX = [1, 1, 0, -1, -1, -1,  0,  1];
 const dY = [0, 1, 1,  1,  0, -1, -1, -1];
 
@@ -125,15 +125,14 @@ function getXY(string){
 
 firstTime = true;
 function click(cell) {
-    console.log(cell.id);
-
     if (firstTime) {
         firstTime = false;
 
-        updateMines(INITIAL_MINES); // Initialize mines
+        updateMines(initialMines); // Initialize mines
         incrementTimer(); // Initialize timer
     }
-    clickPos = str.split(";").map(Number);
+    clickPos = getXY(cell.id);
     mask = floodFill(clickPos[0], clickPos[1], numbers, mask);
     updateGrid(width, height, mask, numbers);
+
 }

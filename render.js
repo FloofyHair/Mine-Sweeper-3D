@@ -1,8 +1,7 @@
-const INITIAL_MINES = 10;
-
 colorMap = {
     "-1": "#FFFFFF",
-    "0": "#000012", 
+    // "0": "#000012",
+    "0": "#FFFFFF",
     "1": "#FFADAD",
     "2": "#FFD6A5",
     "3": "#FDFEB6",
@@ -38,19 +37,18 @@ function updateMines(minesValue) {
     digits[1].style.transform = `translate(0, ${tens * -5.75}rem)`;
 }
 
-function updateGrid(height, width, mask, values) {
-    for (let i = 0; i <= height; i++) {
-        for (let j = 0; j <= width; j++) {
-            const cell = document.getElementById(i + "-" + j);
-            cell.innerHTML = mask[i][j] & 1 ? values[i][j] : "";
-            cell.style.color = colorMap[values[i][j]];
+function updateGrid(width, height, mask, values) {
+    for (let y = 0; y <= height; y++) {
+        for (let x = 0; x <= width; x++) {
+            const cell = document.getElementById(x + ";" + y);
+            cell.innerHTML = mask[y][x] & 1 ? values[y][x] : "";
+            cell.style.color = colorMap[values[y][x]];
         }
     }
 }
 
 // Create Minesweeper Grid
-function createGrid(height, width, mines) {
-    console.log(height, width, mines)
+function createGrid(width, height, mines) {
     // Ensure height is less than width
     if (height > width) {
         [height, width] = [width, height];
@@ -62,16 +60,16 @@ function createGrid(height, width, mines) {
 
 
     // Create grid
-    for (let i = 0; i < height; i++) {
+    for (let y = 0; y < height; y++) {
         const row = document.createElement("div");
         row.className = "row";
         grid.appendChild(row);
 
-        for (let j = 0; j < width; j++) {
+        for (let x = 0; x < width; x++) {
             const cell = document.createElement("div");
             
             cell.className = "cell";
-            cell.id = i + "-" + j;
+            cell.id = x + ";" + y;
             
             cell.addEventListener("click", click.bind(null, cell));
             
@@ -80,17 +78,5 @@ function createGrid(height, width, mines) {
 
             row.appendChild(cell);
         }
-    }
-}
-
-firstTime = true;
-function click(cell) {
-    console.log(cell.id);
-
-    if (firstTime) {
-        firstTime = false;
-
-        updateMines(INITIAL_MINES); // Initialize mines
-        incrementTimer(); // Initialize timer
     }
 }
