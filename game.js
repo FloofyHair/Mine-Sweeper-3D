@@ -1,7 +1,8 @@
 const width = 20;
 const height = 10;
 
-
+const dX = [1, 1, 0, -1, -1, -1,  0,  1];
+const dY = [0, 1, 1,  1,  0, -1, -1, -1];
 
 function randInt(min, max){
     return Math.floor(Math.random() * (max - min)) + min
@@ -26,8 +27,8 @@ function generateBoard(num_mines){
     grid = generateGrid(width, height);
     let i = 0;
     while(i<num_mines){
-        x = randInt(0, width);
-        y = randInt(0, height);
+        x = randInt(0, width-1);
+        y = randInt(0, height-1);
 
         if(grid[y][x] == 0){
             i++;
@@ -55,8 +56,6 @@ function validCell(x, y){
     return ((x >= 0) && (x < width) && (y >= 0) && (y < height))
 }
 function numNeighbors(grid, x, y){
-    const dX = [1, 1, 0, -1, -1, -1,  0,  1];
-    const dY = [0, 1, 1,  1,  0, -1, -1, -1];
 
     if(grid[y][x]==1){
         return -1
@@ -90,8 +89,6 @@ function logB(board){
 }
 
 function floodFill(x,y, numbers){
-    const dX = [-1, 1, 0, 0]
-    const dY = [0, 0, -1, 1]
     var mask = generateGrid(width, height)
     var queue = [[x,y]]
     while(queue.length>0){
@@ -100,18 +97,16 @@ function floodFill(x,y, numbers){
         let cy = current[1]
         if((!validCell(cx,cy))||(mask[cy][cx]==1)){continue}
         mask[cy][cx] = 1
-
-        if(numbers[cy][cx]<1){continue}
-        for(d = 0; d<4; d++){
+        if(numbers[cy][cx]>0){continue}
+        for(let d = 0; d<8; d++){
             queue.push([cx+dX[d],cy+dY[d]])
         }
     }
     return mask
 }
 
-board = generateBoard(24)
+board = generateBoard(20)
 numbers = getGridNumbers(board)
-mask = floodFill(10,5,numbers)
-// logB(board)
+mask = floodFill(0,0,numbers)
 logB(numbers)
 logB(mask)
