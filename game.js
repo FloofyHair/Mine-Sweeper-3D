@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function() {
 function getXY(string){
     return string.split(";").map(Number);
 }
-function createGrid(width, height, numbers){}
+
 firstTime = true;
 function click(cell) {
     console.log(cell.id);
