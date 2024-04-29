@@ -1,4 +1,6 @@
 
+const INITIAL_MINES = 10;
+
 values = [
     [-1, 2, -1, 1],
     [1, 2, 1, 1],
@@ -24,29 +26,15 @@ colorMap = {
     "8": "#FFC6FF"
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    createGrid(10, 10, values);
-    updateGrid(10, 10, mask);
-    
-});
 
 timerValue = 0;
 function incrementTimer() {
-    timer = document.getElementById("timer");
-    digits = timer.children;
-
+    timer = document.getElementById("timer-digits");
     timerValue++;
-  
-    ones = Math.floor(timerValue/1)%10;
-    tens = Math.floor(timerValue/10)%10;
-    hundreds = Math.floor(timerValue/100)%10;
-  
-    //console.log(`${timerValue}, ${ones}, ${tens}, ${hundreds}`);
-  
-    digits[0].style.transform = `translate(0, ${ones * -5.75}rem)`;
-    digits[1].style.transform = `translate(0, ${tens * -5.75}rem)`;
-    digits[2].style.transform = `translate(0, ${hundreds * -5.75}rem)`;
+    let paddedTimer = String(timerValue).padStart(3, '0');
 
+    timer.innerHTML = paddedTimer;
+  
     setTimeout(incrementTimer, 1000);
 }
 
@@ -114,7 +102,8 @@ function click(cell) {
 
     if (firstTime) {
         firstTime = false;
-        updateMines(10); // Initialize mines
+
+        updateMines(INITIAL_MINES); // Initialize mines
         incrementTimer(); // Initialize timer
     }
 }

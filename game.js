@@ -110,3 +110,9 @@ numbers = getGridNumbers(board)
 mask = floodFill(0,0,numbers)
 logB(numbers)
 logB(mask)
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    createGrid(width, height, numbers);
+    updateGrid(width, height, mask);
+});
