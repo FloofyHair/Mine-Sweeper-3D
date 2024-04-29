@@ -1,17 +1,4 @@
-
 const INITIAL_MINES = 10;
-
-values = [
-    [-1, 2, -1, 1],
-    [1, 2, 1, 1],
-    [0, 0, 0, 0]
-]
-
-mask = [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0]
-]
 
 colorMap = {
     "-1": "#FFFFFF",
@@ -51,10 +38,9 @@ function updateMines(minesValue) {
     digits[1].style.transform = `translate(0, ${tens * -5.75}rem)`;
 }
 
-function updateGrid(height, width, mask) {
+function updateGrid(height, width, mask, values) {
     for (let i = 0; i <= height; i++) {
         for (let j = 0; j <= width; j++) {
-            console.log(i, j);
             const cell = document.getElementById(i + "-" + j);
             cell.innerHTML = mask[i][j] & 1 ? values[i][j] : "";
             cell.style.color = colorMap[values[i][j]];
@@ -64,6 +50,7 @@ function updateGrid(height, width, mask) {
 
 // Create Minesweeper Grid
 function createGrid(height, width, mines) {
+    console.log(height, width, mines)
     // Ensure height is less than width
     if (height > width) {
         [height, width] = [width, height];
