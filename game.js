@@ -88,7 +88,7 @@ function logB(board){
     console.log()
 }
 
-function floodFill(x,y, numbers){
+function floodFill(x,y, numbers, old_mask){
     var mask = generateGrid(width, height)
     var queue = [[x,y]]
     while(queue.length>0){
@@ -102,17 +102,38 @@ function floodFill(x,y, numbers){
             queue.push([cx+dX[d],cy+dY[d]])
         }
     }
+    for(let y = 0; y < height; y++){
+        for(let x = 0; x < width; x++){
+            mask[y][x] = mask[y][x] | old_mask[y][x]
+        }
+    }
     return mask
 }
 
 board = generateBoard(20)
 numbers = getGridNumbers(board)
-mask = floodFill(0,0,numbers)
-logB(numbers)
-logB(mask)
-
+mask = generateGrid(width, height)
 
 document.addEventListener("DOMContentLoaded", function() {
     createGrid(width, height, numbers);
-    updateGrid(width, height, mask);
+    updateGrid(width, height, mask, numbers);
 });
+
+function getXY(string){
+    return string.split(";").map(Number);
+}
+function createGrid(width, height, numbers){}
+firstTime = true;
+function click(cell) {
+    console.log(cell.id);
+
+    if (firstTime) {
+        firstTime = false;
+
+        updateMines(INITIAL_MINES); // Initialize mines
+        incrementTimer(); // Initialize timer
+    }
+    clickPos = str.split(";").map(Number);
+    mask = floodFill(clickPos[0], clickPos[1], numbers, mask);
+    updateGrid(width, height, mask, numbers);
+}
