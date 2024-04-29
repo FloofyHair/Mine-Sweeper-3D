@@ -48,6 +48,8 @@ function updateGrid(width, height, mask, values) {
     }
 }
 
+
+
 // Create Minesweeper Grid
 function createGrid(width, height, mines) {
     // Ensure height is less than width
@@ -73,7 +75,8 @@ function createGrid(width, height, mines) {
             cell.id = x + ";" + y;
             
             cell.addEventListener("click", click.bind(null, cell));
-            
+            cell.addEventListener("contextmenu", rightClick.bind(null, cell));
+
             cell.style.width = 100 / width + "%";
             cell.style.fontSize = 600 / width + "px";
 

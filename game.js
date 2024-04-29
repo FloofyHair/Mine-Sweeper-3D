@@ -113,7 +113,7 @@ function floodFill(x,y, numbers, old_mask){
 board = generateBoard(20)
 numbers = getGridNumbers(board)
 mask = generateGrid(width, height)
-
+flags = generateGrid(width, height)
 document.addEventListener("DOMContentLoaded", function() {
     createGrid(width, height, numbers);
     updateGrid(width, height, mask, numbers);
@@ -135,4 +135,10 @@ function click(cell) {
     mask = floodFill(clickPos[0], clickPos[1], numbers, mask);
     updateGrid(width, height, mask, numbers);
 
+}
+
+function rightClick(cell, event){
+    event.preventDefault();
+    clickPos = getXY(cell.id);
+    flags[clickPos[1]][clickPos[0]] = 1;
 }
