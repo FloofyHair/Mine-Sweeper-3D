@@ -38,8 +38,9 @@ function updateMines(minesValue) {
 }
 
 function updateGrid(width, height, mask, values) {
-    for (let y = 0; y <= height; y++) {
-        for (let x = 0; x <= width; x++) {
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+            console.log(y, x)
             const cell = document.getElementById(x + ";" + y);
             cell.innerHTML = mask[y][x] & 1 ? values[y][x] : "";
             cell.style.color = colorMap[values[y][x]];
