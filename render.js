@@ -1,7 +1,7 @@
 colorMap = {
     "-1": "#FFFFFF",
-    // "0": "#000012",
-    "0": "#FFFFFF",
+    "0": "#000012",
+    // "0": "#FFFFFF",
     "1": "#FFADAD",
     "2": "#FFD6A5",
     "3": "#FDFEB6",
@@ -9,7 +9,8 @@ colorMap = {
     "5": "#9BF6FF",
     "6": "#A0C4FF",
     "7": "#BDB2FF",
-    "8": "#FFC6FF"
+    "8": "#FFC6FF",
+    "?": "#FFFFFF",
 }
 
 
@@ -41,9 +42,9 @@ function updateGrid(width, height, mask, flags, values) {
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
             const cell = document.getElementById(x + ";" + y);
-            cell.innerHTML = mask[y][x] & 1 ? values[y][x] : "";
+            cell.innerHTML = mask[y][x] & 1 ? values[y][x] : "?";
             cell.innerHTML = flags[y][x] & 1 ? "F" : cell.innerHTML
-            cell.style.color = colorMap[values[y][x]];
+            cell.style.color = colorMap[cell.innerHTML];
         }
     }
 }
@@ -70,10 +71,10 @@ function createGrid(width, height, mines) {
 
         for (let x = 0; x < width; x++) {
             const cell = document.createElement("div");
-            
+
             cell.className = "cell";
             cell.id = x + ";" + y;
-            
+
             cell.addEventListener("click", click.bind(null, cell));
             cell.addEventListener("contextmenu", rightClick.bind(null, cell));
 
