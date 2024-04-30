@@ -73,6 +73,5 @@ body {
 .digit {
   position:absolute;
   width: 50px;
-  transform: translate(0rem, 5.8rem);
   transition: transform 0.3s ease;
 }
