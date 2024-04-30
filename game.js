@@ -116,13 +116,23 @@ mask = generateGrid(width, height)
 flags = generateGrid(width, height)
 document.addEventListener("DOMContentLoaded", function() {
     createGrid(width, height, numbers);
-    updateGrid(width, height, mask, numbers);
+    updateGrid(width, height, mask, flags, numbers);
 });
 
 function getXY(string){
     return string.split(";").map(Number);
 }
 
+function updateFlags(width, height, flags, mask){
+    newFlags = generateGrid(width, height)
+    for(let y = 0; y < height; y++){
+        for(let x = 0; x < width; x++){
+            newFlags[y][x] = (1-mask[y][x])&flags[y][x]
+        }
+    }
+    console.log(newFlags)
+    return newFlags
+}
 firstTime = true;
 function click(cell) {
     if (firstTime) {
@@ -133,12 +143,18 @@ function click(cell) {
     }
     clickPos = getXY(cell.id);
     mask = floodFill(clickPos[0], clickPos[1], numbers, mask);
-    updateGrid(width, height, mask, numbers);
+    flags = updateFlags(width, height, flags, mask);
+    updateGrid(width, height, mask, flags, numbers);
 
 }
 
 function rightClick(cell, event){
     event.preventDefault();
     clickPos = getXY(cell.id);
-    flags[clickPos[1]][clickPos[0]] = 1;
+    x = clickPos[0];
+    y = clickPos[1];
+    flags[y][x] = (1-mask[y][x])&(1-flags[y][x]);
+    console.log(flags)
+    updateGrid(width, height, mask, flags, numbers);
 }
+

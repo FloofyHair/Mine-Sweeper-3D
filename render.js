@@ -37,12 +37,12 @@ function updateMines(minesValue) {
     digits[1].style.transform = `translate(0, ${tens * -5.75}rem)`;
 }
 
-function updateGrid(width, height, mask, values) {
+function updateGrid(width, height, mask, flags, values) {
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
-            console.log(y, x)
             const cell = document.getElementById(x + ";" + y);
             cell.innerHTML = mask[y][x] & 1 ? values[y][x] : "";
+            cell.innerHTML = flags[y][x] & 1 ? "F" : cell.innerHTML
             cell.style.color = colorMap[values[y][x]];
         }
     }
