@@ -46,8 +46,8 @@ function updateGrid(width, height, mask, flags, values) {
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
             const cell = document.getElementById(x + ";" + y);
-            cell.innerHTML = mask[y][x] & 1 ? values[y][x] : "?";
-            cell.innerHTML = flags[y][x] & 1 ? "F" : cell.innerHTML
+            var cellInner = mask[y][x] & 1 ? values[y][x] : "?";
+            cell.innerHTML = flags[y][x] & 1 ? "F" : cellInner
             cell.style.color = colorMap[cell.innerHTML];
         }
     }

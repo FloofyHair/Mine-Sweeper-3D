@@ -4,7 +4,10 @@ const initialMines = 30;
 
 const dX = [1, 1, 0, -1, -1, -1,  0,  1];
 const dY = [0, 1, 1,  1,  0, -1, -1, -1];
-const num_flags = 0;
+
+numFlags = 0;
+remainingMines = initialMines;
+
 function randInt(min, max){
     return Math.floor(Math.random() * (max - min)) + min
 }
@@ -119,6 +122,7 @@ flags = generateGrid(width, height)
 document.addEventListener("DOMContentLoaded", function() {
     createGrid(width, height, numbers);
     updateGrid(width, height, mask, flags, numbers);
+    updateMines(remainingMines)
 });
 
 function getXY(string){
@@ -141,17 +145,12 @@ function onFirstClick(cell){
     clickPos = getXY(cell.id);
     firstTime = false;
     updateMines(initialMines); // Initialize mines
-    incrementTimer(); // Initialize timer
-    // board = generateBoard(initialMines)
-    // numbers = getGridNumbers(board)
-
+    incrementTimer(); // Initialize time
 
     let x = clickPos[0]
     let y = clickPos[1]
     board = generateBoard(initialMines)
     while(numNeighbors(board, x, y)!=0){
-        // console.log(board)
-        // console.log(board[0][0])
         board = generateBoard(initialMines)
     }
 
@@ -166,8 +165,24 @@ function click(event) {
         clickPos = getXY(cell.id);
         mask = floodFill(clickPos[0], clickPos[1], numbers, mask);
         flags = updateFlags(width, height, flags, mask);
-        updateGrid(width, height, mask, flags, numbers);
+        update(width, height, mask, flags, numbers);
 }
+}
+function flagCount(width, height, flags){
+    let n = 0
+    for (let y = 0; y < height; y++){
+        for(let x = 0; x < width; x++){
+            n += flags[y][x]
+        }
+    }
+    return n
+}
+
+function update(width, height, mask, flags, numbers){
+    numFlags = flagCount(width, height, flags)
+    remainingMines = Math.max(0,initialMines - numFlags);
+    updateMines(remainingMines);
+    updateGrid(width, height, mask, flags, numbers)
 }
 
 function rightClick(event){
@@ -178,8 +193,7 @@ function rightClick(event){
         x = clickPos[0];
         y = clickPos[1];
         flags[y][x] = (1-mask[y][x])&(1-flags[y][x]);
-        console.log(flags)
-        updateGrid(width, height, mask, flags, numbers);
+        update(width, height, mask, flags, numbers);
     }
 }
 
