@@ -157,24 +157,29 @@ function onFirstClick(cell){
 
     numbers = getGridNumbers(board)
 }
-function click(cell) {
-    if (firstTime) {
-        onFirstClick(cell)
-    }
-    clickPos = getXY(cell.id);
-    mask = floodFill(clickPos[0], clickPos[1], numbers, mask);
-    flags = updateFlags(width, height, flags, mask);
-    updateGrid(width, height, mask, flags, numbers);
-
+function click(event) {
+    if (event.target.className == "cell") {
+        cell = event.target;
+        if (firstTime) {
+            onFirstClick(cell)
+        }
+        clickPos = getXY(cell.id);
+        mask = floodFill(clickPos[0], clickPos[1], numbers, mask);
+        flags = updateFlags(width, height, flags, mask);
+        updateGrid(width, height, mask, flags, numbers);
+}
 }
 
-function rightClick(cell, event){
-    event.preventDefault();
-    clickPos = getXY(cell.id);
-    x = clickPos[0];
-    y = clickPos[1];
-    flags[y][x] = (1-mask[y][x])&(1-flags[y][x]);
-    console.log(flags)
-    updateGrid(width, height, mask, flags, numbers);
+function rightClick(event){
+    if (event.target.className == "cell") {
+        cell = event.target;
+        event.preventDefault();
+        clickPos = getXY(cell.id);
+        x = clickPos[0];
+        y = clickPos[1];
+        flags[y][x] = (1-mask[y][x])&(1-flags[y][x]);
+        console.log(flags)
+        updateGrid(width, height, mask, flags, numbers);
+    }
 }
 

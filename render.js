@@ -12,6 +12,10 @@ colorMap = {
     "8": "#FFC6FF",
     "?": "#FFFFFF",
 }
+document.addEventListener("DOMContentLoaded", function() {
+    document.body.addEventListener("click", click);
+    document.body.addEventListener("contextmenu", rightClick);
+  });
 
 
 timerValue = 0;
@@ -75,9 +79,6 @@ function createGrid(width, height, mines) {
             cell.className = "cell";
             cell.id = x + ";" + y;
 
-            cell.addEventListener("click", click.bind(null, cell));
-            cell.addEventListener("contextmenu", rightClick.bind(null, cell));
-
             cell.style.width = 100 / width + "%";
             cell.style.fontSize = 600 / width + "px";
 
@@ -85,3 +86,4 @@ function createGrid(width, height, mines) {
         }
     }
 }
+
