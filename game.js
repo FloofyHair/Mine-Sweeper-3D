@@ -109,17 +109,16 @@ function floodFill(width, height, x,y, numbers, old_mask){
     }
     return mask
 }
+function gameSetup(width, height){
+    board = generateGrid(width, height)
+    numbers = generateGrid(width, height)
+    mask = generateGrid(width, height)
+    flags = generateGrid(width, height)
 
-board = generateGrid(width, height)
-numbers = generateGrid(width, height)
-mask = generateGrid(width, height)
-flags = generateGrid(width, height)
-
-document.addEventListener("DOMContentLoaded", function() {
     createGrid(width, height, numbers);
     updateGrid(width, height, mask, flags, numbers);
     updateMines(remainingMines)
-});
+}
 
 function getXY(string){
     return string.split(";").map(Number);
@@ -132,12 +131,11 @@ function updateFlags(width, height, flags, mask){
             newFlags[y][x] = (1-mask[y][x])&flags[y][x]
         }
     }
-    console.log(newFlags)
     return newFlags
 }
 firstTime = true;
 
-function onFirstClick(cell){
+function onFirstClick(width, height, cell){
     clickPos = getXY(cell.id);
     firstTime = false;
     updateMines(initialMines); // Initialize mines
@@ -156,7 +154,7 @@ function click(width, height, event) {
     if (event.target.className == "cell") {
         cell = event.target;
         if (firstTime) {
-            onFirstClick(cell)
+            onFirstClick(width, height, cell)
         }
         clickPos = getXY(cell.id);
         mask = floodFill(width, height, clickPos[0], clickPos[1], numbers, mask);
