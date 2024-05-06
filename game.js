@@ -1,7 +1,3 @@
-const width = 20;
-const height = 10;
-const initialMines = 30;
-
 const dX = [1, 1, 0, -1, -1, -1,  0,  1];
 const dY = [0, 1, 1,  1,  0, -1, -1, -1];
 
@@ -23,7 +19,7 @@ function generateGrid(width, height){
 
     return grid
 }
-function generateBoard(num_mines){
+function generateBoard(width, height, num_mines){
     if((width<=0)||(height<=0)||(num_mines>width*height)){
         return false
     }
@@ -43,23 +39,23 @@ function generateBoard(num_mines){
     return grid
 }
 
-function getGridNumbers(mine_grid){
+function getGridNumbers(width, height, mine_grid){
     var grid = new Array(height);
 
     for (let y = 0; y < height; y++) {
         grid[y] = new Array(width);
         for (let x = 0; x < width; x++) {
-            grid[y][x] = numNeighbors(mine_grid,x,y)
+            grid[y][x] = numNeighbors(mine_grid, width, height, x, y)
         }
     }
 
     return grid
 }
 
-function validCell(x, y){
+function validCell(width, height, x, y){
     return ((x >= 0) && (x < width) && (y >= 0) && (y < height))
 }
-function numNeighbors(grid, x, y){
+function numNeighbors(grid, width, height, x, y){
 
     if(grid[y][x]==1){
         return -1
@@ -68,7 +64,7 @@ function numNeighbors(grid, x, y){
     for(var n = 0; n<8; n++){
         let dx = x+dX[n];
         let dy = y+dY[n];
-        if(validCell(dx,dy)){
+        if(validCell(width, height, dx,dy)){
             num += grid[dy][dx]
         }
     }
@@ -92,14 +88,14 @@ function logB(board){
     console.log()
 }
 
-function floodFill(x,y, numbers, old_mask){
+function floodFill(width, height, x,y, numbers, old_mask){
     var mask = generateGrid(width, height)
     var queue = [[x,y]]
     while(queue.length>0){
         let current = queue.shift(0)
         let cx = current[0]
         let cy = current[1]
-        if((!validCell(cx,cy))||(mask[cy][cx]==1)){continue}
+        if((!validCell(width, height, cx,cy))||(mask[cy][cx]==1)){continue}
         mask[cy][cx] = 1
         if(numbers[cy][cx]!=0){continue}
         for(let d = 0; d<8; d++){
@@ -149,43 +145,43 @@ function onFirstClick(cell){
 
     let x = clickPos[0]
     let y = clickPos[1]
-    board = generateBoard(initialMines)
-    while(numNeighbors(board, x, y)!=0){
-        board = generateBoard(initialMines)
+    board = generateBoard(width, height, initialMines)
+    while(numNeighbors(board, width, height, x, y)!=0){
+        board = generateBoard(width, height, initialMines)
     }
 
-    numbers = getGridNumbers(board)
+    numbers = getGridNumbers(width, height, board)
 }
-function click(event) {
+function click(width, height, event) {
     if (event.target.className == "cell") {
         cell = event.target;
         if (firstTime) {
             onFirstClick(cell)
         }
         clickPos = getXY(cell.id);
-        mask = floodFill(clickPos[0], clickPos[1], numbers, mask);
+        mask = floodFill(width, height, clickPos[0], clickPos[1], numbers, mask);
         flags = updateFlags(width, height, flags, mask);
         update(width, height, mask, flags, numbers);
 }
 }
-function flagCount(width, height, flags){
+function gridSum(width, height, grid){
     let n = 0
     for (let y = 0; y < height; y++){
         for(let x = 0; x < width; x++){
-            n += flags[y][x]
+            n += grid[y][x]
         }
     }
     return n
 }
 
 function update(width, height, mask, flags, numbers){
-    numFlags = flagCount(width, height, flags)
+    numFlags = gridSum(width, height, flags)
     remainingMines = Math.max(0,initialMines - numFlags);
     updateMines(remainingMines);
     updateGrid(width, height, mask, flags, numbers)
 }
 
-function rightClick(event){
+function rightClick(width, height, event){
     if (event.target.className == "cell") {
         cell = event.target;
         event.preventDefault();

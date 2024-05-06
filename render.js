@@ -13,8 +13,8 @@ colorMap = {
     "?": "#FFFFFF",
 }
 document.addEventListener("DOMContentLoaded", function() {
-    document.body.addEventListener("click", click);
-    document.body.addEventListener("contextmenu", rightClick);
+    document.body.addEventListener("click", (cell)=>{click(width, height, cell)});
+    document.body.addEventListener("contextmenu", (cell)=>{rightClick(width, height, cell)});
   });
 
 
