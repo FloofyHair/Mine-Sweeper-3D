@@ -38,8 +38,8 @@ function updateMines(minesValue) {
   
     //console.log(`${minesValue}, ${ones}, ${tens}`);
   
-    digits[0].style.transform = `translate(0, ${ones * -5.75}rem)`;
-    digits[1].style.transform = `translate(0, ${tens * -5.75}rem)`;
+    digits[0].style.transform = `translate(0, ${ones * -5.9}rem)`;
+    digits[1].style.transform = `translate(0, ${tens * -5.9}rem)`;
 }
 
 function updateGrid(width, height, mask, flags, values) {
