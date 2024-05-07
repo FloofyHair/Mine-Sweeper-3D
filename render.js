@@ -79,8 +79,8 @@ function createGrid(width, height, mines) {
             cell.className = "cell";
             cell.id = x + ";" + y;
 
-            cell.style.width = 100 / width + "%";
-            cell.style.fontSize = 600 / width + "px";
+            cell.style.width = 100 / height + "%";
+            cell.style.fontSize = 500 / height + "px";
 
             row.appendChild(cell);
         }
