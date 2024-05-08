@@ -1,17 +1,17 @@
-colorMap = {
-    "-1": "#FFFFFF",
-    "0": "#000012",
-    // "0": "#FFFFFF",
-    "1": "#FFADAD",
-    "2": "#FFD6A5",
-    "3": "#FDFEB6",
-    "4": "#CAFFBF",
-    "5": "#9BF6FF",
-    "6": "#A0C4FF",
-    "7": "#BDB2FF",
-    "8": "#FFC6FF",
-    "?": "#FFFFFF",
-}
+// colorMap = {
+//     "-1": "#FFFFFF",
+//     "0": "#000012",
+//     // "0": "#FFFFFF",
+//     "1": "#FFADAD",
+//     "2": "#FFD6A5",
+//     "3": "#FDFEB6",
+//     "4": "#CAFFBF",
+//     "5": "#9BF6FF",
+//     "6": "#A0C4FF",
+//     "7": "#BDB2FF",
+//     "8": "#FFC6FF",
+//     "U": "#FFFFFF",
+// }
 document.addEventListener("DOMContentLoaded", function() {
     document.body.addEventListener("click", (cell)=>{click(width, height, cell)});
     document.body.addEventListener("contextmenu", (cell)=>{rightClick(width, height, cell)});
@@ -46,9 +46,11 @@ function updateGrid(width, height, mask, flags, values) {
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
             const cell = document.getElementById(x + ";" + y);
-            var cellInner = mask[y][x] & 1 ? values[y][x] : "?";
-            cell.innerHTML = flags[y][x] & 1 ? "F" : cellInner
-            cell.style.color = colorMap[cell.innerHTML];
+            let tileType = mask[y][x] & 1 ? values[y][x] : "U";
+            tileType = flags[y][x] & 1 ? "F" : tileType;
+            cell.style.backgroundImage = `url(Sprites/${tileType}.png)`;
+            // cell.innerHTML = cell.tileType
+            // cell.style.color = colorMap[cell.innerHTML];
         }
     }
 }
