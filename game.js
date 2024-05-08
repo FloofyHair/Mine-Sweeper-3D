@@ -19,16 +19,14 @@ function generateGrid(width, height){
 
     return grid
 }
-function generateBoard(width, height, num_mines){
-    if((width<=0)||(height<=0)||(num_mines>width*height)){
-        return false
-    }
 
+
+function generateBoard(width, height, num_mines){
     grid = generateGrid(width, height);
     let i = 0;
     while(i<num_mines){
-        let x = randInt(0, width-1);
-        let y = randInt(0, height-1);
+        let x = randInt(0, width);
+        let y = randInt(0, height);
 
         if(grid[y][x] == 0){
             i++;
@@ -144,7 +142,13 @@ function onFirstClick(width, height, cell){
     let x = clickPos[0]
     let y = clickPos[1]
     board = generateBoard(width, height, initialMines)
-    while(numNeighbors(board, width, height, x, y)!=0){
+
+    let condition = (board) => numNeighbors(board, width, height, x, y)!=0;
+    if(initialMines>(width*height*0.7)){
+        condition = (board) => board[y][x]==1
+    }
+
+    while(condition(board)){
         board = generateBoard(width, height, initialMines)
     }
 

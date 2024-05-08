@@ -18,7 +18,9 @@ function formSubmit(){
     if(isNaN(widthInp)||isNaN(heightInp)|isNaN(minesInp)){
         return;
     }
-
+    if((widthInp<=0)||(heightInp<=0)||(minesInp>=widthInp*heightInp)){
+        return;
+    }
     document.getElementById("menu").style.display = "none";
     width = widthInp
     height = heightInp
