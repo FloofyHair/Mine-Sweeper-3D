@@ -1,32 +1,29 @@
 <!DOCTYPE html>
-<head>
-    <script type="text/javascript" src="menu.js"></script>
-    <script type="text/javascript" src="render.js"></script>
-    <script type="text/javascript" src="game.js"></script>
+<head xmlns="">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
           rel="stylesheet">
-    <title> Minesweeper </title>
 </head>
 <body>
+
 
 <div id="menu">
     <div id="menu-title">Minesweeper</div>
     <span id="menu-buttons">
-            
-            <label for="widthInput"></label><input type="text" id="widthInput" class="menuInput" placeholder="Width">
-            <label for="heightInput"></label><input type="text" id="heightInput" class="menuInput" placeholder="Height">
-            <label for="minesInput"></label><input type="text" id="minesInput" class="menuInput" placeholder="Mines">
+            <!--
+            <input type="text" id="widthInput" class="menuInput" placeholder="Width">
+            <input type="text" id="heightInput" class="menuInput" placeholder="Height">
+            <input type="text" id="minesInput" class="menuInput" placeholder="Mines">
+            -->
 
-        <!--
-        <input type="text" id="widthInput" class="menuInput" placeholder="Width" value="10">
-        <input type="text" id="heightInput" class="menuInput" placeholder="Height" value="10">
-        <input type="text" id="minesInput" class="menuInput" placeholder="Mines" value="10">
-        -->
+            <input type="text" id="widthInput" class="menuInput" placeholder="Width" value="10">
+            <input type="text" id="heightInput" class="menuInput" placeholder="Height" value="10">
+            <input type="text" id="minesInput" class="menuInput" placeholder="Mines" value="10">
+
             <div id="startButtonContainer">
-                <button id="startButtonBack" onClick="formSubmit()">
+                <button id="startButtonBack">
                   <span id="startButtonFront">
                     Start
                   </span>
@@ -42,11 +39,19 @@
 
     <div id="mines">
         <div class="digit" style="left:50px;"> 0123456789</div>
-        <div class="digit" style="left:0;"> 0123456789</div>
+        <div class="digit" style="left:0px;"> 0123456789</div>
     </div>
 
     <div id="grid">
 
     </div>
 </div>
+
+<script type="module">
+    import {formSubmit} from "./menu";
+
+    const startButton = document.getElementById("startButtonBack");
+    startButton.addEventListener("click", formSubmit);
+</script>
+
 </body>

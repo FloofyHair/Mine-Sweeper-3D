@@ -1,48 +1,46 @@
-// colorMap = {
-//     "-1": "#FFFFFF",
-//     "0": "#000012",
-//     // "0": "#FFFFFF",
-//     "1": "#FFADAD",
-//     "2": "#FFD6A5",
-//     "3": "#FDFEB6",
-//     "4": "#CAFFBF",
-//     "5": "#9BF6FF",
-//     "6": "#A0C4FF",
-//     "7": "#BDB2FF",
-//     "8": "#FFC6FF",
-//     "U": "#FFFFFF",
-// }
-document.addEventListener("DOMContentLoaded", function() {
-    document.body.addEventListener("click", (cell)=>{click(width, height, cell)});
-    document.body.addEventListener("contextmenu", (cell)=>{rightClick(width, height, cell)});
-  });
+import {click} from "./game";
+import {rightClick} from "./game";
+
+let width = 0;
+let height = 0;
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.body.addEventListener("click", (cell) => {
+        click(width, height, cell)
+    });
+    document.body.addEventListener("contextmenu", (cell) => {
+        rightClick(width, height, cell)
+    });
+});
 
 
-timerValue = 0;
-function incrementTimer() {
-    timer = document.getElementById("timer-digits");
+let timerValue = 0;
+
+export function incrementTimer() {
+    let timer = document.getElementById("timer-digits");
     timerValue++;
-    let paddedTimer = String(timerValue).padStart(3, '0');
 
-    timer.innerHTML = paddedTimer;
-  
+    timer.innerHTML = String(timerValue).padStart(3, '0');
+
     setTimeout(incrementTimer, 1000);
 }
 
-function updateMines(minesValue) {
-    mines = document.getElementById("mines");
-    digits = mines.children;
 
-    ones = Math.floor(minesValue/1)%10;
-    tens = Math.floor(minesValue/10)%10;
-  
+export function updateMines(minesValue) {
+    let mines = document.getElementById("mines");
+    let digits = mines.children;
+
+    let ones = Math.floor(minesValue / 1) % 10;
+    let tens = Math.floor(minesValue / 10) % 10;
+
     //console.log(`${minesValue}, ${ones}, ${tens}`);
-  
+
     digits[0].style.transform = `translate(0, ${ones * -5.9}rem)`;
     digits[1].style.transform = `translate(0, ${tens * -5.9}rem)`;
 }
 
-function updateGrid(width, height, mask, flags, values) {
+
+export function updateGrid(width, height, mask, flags, values) {
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
             const cell = document.getElementById(x + ";" + y);
@@ -56,9 +54,7 @@ function updateGrid(width, height, mask, flags, values) {
 }
 
 
-
-// Create Minesweeper Grid
-function createGrid(width, height, mines) {
+export function createGrid(width, height, mines) {
     // Ensure height is less than width
     if (height > width) {
         [height, width] = [width, height];
@@ -88,4 +84,3 @@ function createGrid(width, height, mines) {
         }
     }
 }
-

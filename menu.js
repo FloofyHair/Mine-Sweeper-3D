@@ -1,24 +1,28 @@
-width = 0;
-height = 0;
-initialMines = 0;
+import {gameSetup} from './game.js';
 
-gameRunning = false;
+let width = 0;
+let height = 0;
+let initialMines = 0;
 
-document.addEventListener("DOMContentLoaded", ()=>{gameSetup(width, height)})
+let gameRunning = false;
 
-function getIntVal(elementName){
+document.addEventListener("DOMContentLoaded", () => {
+    gameSetup(width, height)
+})
+
+function getIntVal(elementName) {
     return parseInt(document.getElementById(elementName).value)
 }
 
-function formSubmit(){
-    widthInp = getIntVal("widthInput");
-    heightInp = getIntVal("heightInput");
-    minesInp = getIntVal("minesInput");
+export function formSubmit() {
+    let widthInp = getIntVal("widthInput");
+    let heightInp = getIntVal("heightInput");
+    let minesInp = getIntVal("minesInput");
 
-    if(isNaN(widthInp)||isNaN(heightInp)|isNaN(minesInp)){
+    if (isNaN(widthInp) || isNaN(heightInp) | isNaN(minesInp)) {
         return;
     }
-    if((widthInp<=0)||(heightInp<=0)||(minesInp>=widthInp*heightInp)){
+    if ((widthInp <= 0) || (heightInp <= 0) || (minesInp >= widthInp * heightInp)) {
         return;
     }
     document.getElementById("menu").style.display = "none";
