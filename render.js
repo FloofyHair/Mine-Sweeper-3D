@@ -1,5 +1,5 @@
-import {click} from "./game";
-import {rightClick} from "./game";
+import {click} from "/game.js";
+import {rightClick} from "/game.js";
 
 let width = 0;
 let height = 0;
@@ -54,7 +54,7 @@ export function updateGrid(width, height, mask, flags, values) {
 }
 
 
-export function createGrid(width, height, mines) {
+export function createGrid(width, height) {
     // Ensure height is less than width
     if (height > width) {
         [height, width] = [width, height];
