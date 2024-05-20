@@ -83,7 +83,9 @@ function createGrid(width, height, mines) {
 
             cell.style.width = 100 / height + "%";
             cell.style.fontSize = 500 / height + "px";
-
+            if((x+y)%2==0){
+                cell.style.opacity = 0.93;
+            }
             row.appendChild(cell);
         }
     }
