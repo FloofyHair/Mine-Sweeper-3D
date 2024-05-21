@@ -25,8 +25,11 @@ document.addEventListener("DOMContentLoaded", function () {
 timerValue = 0;
 
 function incrementTimer() {
+    
     timer = document.getElementById("timer-digits");
+    if(gameState==1){
     timerValue++;
+    }
     let paddedTimer = String(timerValue).padStart(3, '0');
 
     timer.innerHTML = paddedTimer;
