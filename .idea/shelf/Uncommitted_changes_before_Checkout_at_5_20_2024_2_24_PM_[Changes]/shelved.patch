@@ -1,0 +1,149 @@
+Index: render.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {click} from \"/game.js\";\r\nimport {rightClick} from \"/game.js\";\r\n\r\nlet width = 0;\r\nlet height = 0;\r\n\r\ndocument.addEventListener(\"DOMContentLoaded\", function () {\r\n    document.body.addEventListener(\"click\", (cell) => {\r\n        click(width, height, cell)\r\n    });\r\n    document.body.addEventListener(\"contextmenu\", (cell) => {\r\n        rightClick(width, height, cell)\r\n    });\r\n});\r\n\r\n\r\nlet timerValue = 0;\r\n\r\nexport function incrementTimer() {\r\n    let timer = document.getElementById(\"timer-digits\");\r\n    timerValue++;\r\n\r\n    timer.innerHTML = String(timerValue).padStart(3, '0');\r\n\r\n    setTimeout(incrementTimer, 1000);\r\n}\r\n\r\n\r\nexport function updateMines(minesValue) {\r\n    let mines = document.getElementById(\"mines\");\r\n    let digits = mines.children;\r\n\r\n    let ones = Math.floor(minesValue / 1) % 10;\r\n    let tens = Math.floor(minesValue / 10) % 10;\r\n\r\n    //console.log(`${minesValue}, ${ones}, ${tens}`);\r\n\r\n    digits[0].style.transform = `translate(0, ${ones * -5.9}rem)`;\r\n    digits[1].style.transform = `translate(0, ${tens * -5.9}rem)`;\r\n}\r\n\r\n\r\nexport function updateGrid(width, height, mask, flags, values) {\r\n    for (let y = 0; y < height; y++) {\r\n        for (let x = 0; x < width; x++) {\r\n            const cell = document.getElementById(x + \";\" + y);\r\n            let tileType = mask[y][x] & 1 ? values[y][x] : \"U\";\r\n            tileType = flags[y][x] & 1 ? \"F\" : tileType;\r\n            cell.style.backgroundImage = `url(Sprites/${tileType}.png)`;\r\n            // cell.innerHTML = cell.tileType\r\n            // cell.style.color = colorMap[cell.innerHTML];\r\n        }\r\n    }\r\n}\r\n\r\n\r\nexport function createGrid(width, height) {\r\n    // Ensure height is less than width\r\n    if (height > width) {\r\n        [height, width] = [width, height];\r\n    }\r\n\r\n    // Set grid aspect ratio\r\n    const grid = document.getElementById(\"grid\");\r\n    grid.style.aspectRatio = width + \"/\" + height;\r\n\r\n\r\n    // Create grid\r\n    for (let y = 0; y < height; y++) {\r\n        const row = document.createElement(\"div\");\r\n        row.className = \"row\";\r\n        grid.appendChild(row);\r\n\r\n        for (let x = 0; x < width; x++) {\r\n            const cell = document.createElement(\"div\");\r\n\r\n            cell.className = \"cell\";\r\n            cell.id = x + \";\" + y;\r\n\r\n            cell.style.width = 100 / height + \"%\";\r\n            cell.style.fontSize = 500 / height + \"px\";\r\n\r\n            row.appendChild(cell);\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/render.js b/render.js
+--- a/render.js	
++++ b/render.js	
+@@ -1,5 +1,36 @@
+ import {click} from "/game.js";
+ import {rightClick} from "/game.js";
++import * as THREE from 'three';
++
++const scene = new THREE.Scene();
++const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
++const renderer = new THREE.WebGLRenderer({antialias: true});
++renderer.setSize(window.innerWidth, window.innerHeight);
++document.body.appendChild(renderer.domElement);
++
++const light = new THREE.AmbientLight(0x404040); // soft white light
++scene.add(light);
++
++const loader = new THREE.STLLoader();
++const material = new THREE.MeshPhongMaterial({color: 0x808080}); // gray material
++
++loader.load('path/to/your/model.stl', (geometry) => {
++    const mesh = new THREE.Mesh(geometry, material);
++    mesh.castShadow = true;
++    mesh.receiveShadow = true;
++    // Optional: adjust position or scale of the mesh here
++    // mesh.position.set(0, -0.5, 0);
++    // mesh.scale.set(0.5, 0.5, 0.5);
++    scene.add(mesh);
++    animate();
++});
++
++camera.position.z = 5;
++
++function animate() {
++    requestAnimationFrame(animate);
++    renderer.render(scene, camera);
++}
+ 
+ let width = 0;
+ let height = 0;
+@@ -55,32 +86,32 @@
+ 
+ 
+ export function createGrid(width, height) {
+-    // Ensure height is less than width
+-    if (height > width) {
+-        [height, width] = [width, height];
+-    }
+-
+-    // Set grid aspect ratio
+-    const grid = document.getElementById("grid");
+-    grid.style.aspectRatio = width + "/" + height;
+-
+-
+-    // Create grid
+-    for (let y = 0; y < height; y++) {
+-        const row = document.createElement("div");
+-        row.className = "row";
+-        grid.appendChild(row);
+-
+-        for (let x = 0; x < width; x++) {
+-            const cell = document.createElement("div");
+-
+-            cell.className = "cell";
+-            cell.id = x + ";" + y;
+-
+-            cell.style.width = 100 / height + "%";
+-            cell.style.fontSize = 500 / height + "px";
+-
+-            row.appendChild(cell);
+-        }
+-    }
++    // // Ensure height is less than width
++    // if (height > width) {
++    //     [height, width] = [width, height];
++    // }
++    //
++    // // Set grid aspect ratio
++    // const grid = document.getElementById("grid");
++    // grid.style.aspectRatio = width + "/" + height;
++    //
++    //
++    // // Create grid
++    // for (let y = 0; y < height; y++) {
++    //     const row = document.createElement("div");
++    //     row.className = "row";
++    //     grid.appendChild(row);
++    //
++    //     for (let x = 0; x < width; x++) {
++    //         const cell = document.createElement("div");
++    //
++    //         cell.className = "cell";
++    //         cell.id = x + ";" + y;
++    //
++    //         cell.style.width = 100 / height + "%";
++    //         cell.style.fontSize = 500 / height + "px";
++    //
++    //         row.appendChild(cell);
++    //     }
++    // }
+ }
+\ No newline at end of file
+Index: index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<head xmlns=\"\">\r\n    <link rel=\"stylesheet\" href=\"styles.css\">\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap\"\r\n          rel=\"stylesheet\">\r\n</head>\r\n<body>\r\n\r\n\r\n<div id=\"menu\">\r\n    <div id=\"menu-title\">Minesweeper</div>\r\n    <span id=\"menu-buttons\">\r\n            <!--\r\n            <input type=\"text\" id=\"widthInput\" class=\"menuInput\" placeholder=\"Width\">\r\n            <input type=\"text\" id=\"heightInput\" class=\"menuInput\" placeholder=\"Height\">\r\n            <input type=\"text\" id=\"minesInput\" class=\"menuInput\" placeholder=\"Mines\">\r\n            -->\r\n\r\n            <input type=\"text\" id=\"widthInput\" class=\"menuInput\" placeholder=\"Width\" value=\"10\">\r\n            <input type=\"text\" id=\"heightInput\" class=\"menuInput\" placeholder=\"Height\" value=\"10\">\r\n            <input type=\"text\" id=\"minesInput\" class=\"menuInput\" placeholder=\"Mines\" value=\"10\">\r\n\r\n            <div id=\"startButtonContainer\">\r\n                <button id=\"startButtonBack\">\r\n                  <span id=\"startButtonFront\">\r\n                    Start\r\n                  </span>\r\n                </button>\r\n              </div>\r\n            </span>\r\n</div>\r\n\r\n<div id=\"game\">\r\n    <div id=\"timer\">\r\n        <div id=\"timer-digits\"> 000</div>\r\n    </div>\r\n\r\n    <div id=\"mines\">\r\n        <div class=\"digit\" style=\"left:50px;\"> 0123456789</div>\r\n        <div class=\"digit\" style=\"left:0px;\"> 0123456789</div>\r\n    </div>\r\n\r\n    <div id=\"grid\">\r\n\r\n    </div>\r\n</div>\r\n\r\n<script type=\"module\">\r\n    import {formSubmit} from \"./menu.js\";\r\n\r\n    const startButton = document.getElementById(\"startButtonBack\");\r\n    startButton.addEventListener(\"click\", formSubmit);\r\n</script>\r\n\r\n</body>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/index.html b/index.html
+--- a/index.html	
++++ b/index.html	
+@@ -5,6 +5,7 @@
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+           rel="stylesheet">
++    <title
+ </head>
+ <body>
+ 
+Index: game.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {createGrid} from '/NSI-Project/render.js';\r\nimport {updateGrid} from '/NSI-Project/render.js';\r\nimport {updateMines} from '/NSI-Project/render.js';\r\nimport {incrementTimer} from '/NSI-Project/render.js';\r\n\r\nconst dX = [1, 1, 0, -1, -1, -1, 0, 1];\r\nconst dY = [0, 1, 1, 1, 0, -1, -1, -1];\r\n\r\nlet numFlags = 0;\r\nlet remainingMines = 0;\r\nlet firstTime = true;\r\nlet initialMines = 0;\r\nlet numbers, mask, flags;\r\n\r\nfunction randInt(min, max) {\r\n    return Math.floor(Math.random() * (max - min)) + min;\r\n}\r\n\r\nfunction generateGrid(width, height) {\r\n    let grid = new Array(height);\r\n    for (let y = 0; y < height; y++) {\r\n        let row = new Array(width);\r\n        row.fill(0);\r\n        grid[y] = row;\r\n    }\r\n    return grid;\r\n}\r\n\r\nfunction generateBoard(width, height, num_mines) {\r\n    let grid = generateGrid(width, height);\r\n    let i = 0;\r\n    while (i < num_mines) {\r\n        let x = randInt(0, width);\r\n        let y = randInt(0, height);\r\n\r\n        if (grid[y][x] === 0) {\r\n            i++;\r\n            grid[y][x] = 1;\r\n        }\r\n    }\r\n    return grid;\r\n}\r\n\r\nfunction getGridNumbers(width, height, mine_grid) {\r\n    let grid = new Array(height);\r\n    for (let y = 0; y < height; y++) {\r\n        grid[y] = new Array(width);\r\n        for (let x = 0; x < width; x++) {\r\n            grid[y][x] = numNeighbors(mine_grid, width, height, x, y);\r\n        }\r\n    }\r\n    return grid;\r\n}\r\n\r\nfunction validCell(width, height, x, y) {\r\n    return (x >= 0 && x < width && y >= 0 && y < height);\r\n}\r\n\r\nfunction numNeighbors(grid, width, height, x, y) {\r\n    if (grid[y][x] === 1) {\r\n        return -1;\r\n    }\r\n    let num = 0;\r\n    for (let n = 0; n < 8; n++) {\r\n        let dx = x + dX[n];\r\n        let dy = y + dY[n];\r\n        if (validCell(width, height, dx, dy)) {\r\n            num += grid[dy][dx];\r\n        }\r\n    }\r\n    return num;\r\n}\r\n\r\nfunction floodFill(width, height, x, y, numbers, old_mask) {\r\n    let mask = generateGrid(width, height);\r\n    let queue = [[x, y]];\r\n    while (queue.length > 0) {\r\n        let current = queue.shift();\r\n        let cx = current[0];\r\n        let cy = current[1];\r\n        if (!validCell(width, height, cx, cy) || mask[cy][cx] === 1) {\r\n            continue;\r\n        }\r\n        mask[cy][cx] = 1;\r\n        if (numbers[cy][cx] !== 0) {\r\n            continue;\r\n        }\r\n        for (let d = 0; d < 8; d++) {\r\n            queue.push([cx + dX[d], cy + dY[d]]);\r\n        }\r\n    }\r\n    for (let y = 0; y < height; y++) {\r\n        for (let x = 0; x < width; x++) {\r\n            mask[y][x] = mask[y][x] | old_mask[y][x];\r\n        }\r\n    }\r\n    return mask;\r\n}\r\n\r\nfunction getXY(string) {\r\n    return string.split(\";\").map(Number);\r\n}\r\n\r\nfunction updateFlags(width, height, flags, mask) {\r\n    let newFlags = generateGrid(width, height);\r\n    for (let y = 0; y < height; y++) {\r\n        for (let x = 0; x < width; x++) {\r\n            newFlags[y][x] = (1 - mask[y][x]) & flags[y][x];\r\n        }\r\n    }\r\n    return newFlags;\r\n}\r\n\r\nfunction onFirstClick(width, height, cell, initialMines) {\r\n    let clickPos = getXY(cell.id);\r\n    firstTime = false;\r\n    updateMines(initialMines);\r\n    incrementTimer();\r\n\r\n    let x = clickPos[0];\r\n    let y = clickPos[1];\r\n    let board = generateBoard(width, height, initialMines);\r\n\r\n    let condition = (board) => numNeighbors(board, width, height, x, y) !== 0;\r\n    if (initialMines > (width * height * 0.7)) {\r\n        condition = (board) => board[y][x] === 1;\r\n    }\r\n\r\n    while (condition(board)) {\r\n        board = generateBoard(width, height, initialMines);\r\n    }\r\n\r\n    numbers = getGridNumbers(width, height, board);\r\n}\r\n\r\nexport function click(width, height, event) {\r\n    if (event.target.className == \"cell\") {\r\n        let cell = event.target;\r\n        if (firstTime) {\r\n            onFirstClick(width, height, cell, initialMines);\r\n        }\r\n        let clickPos = getXY(cell.id);\r\n        mask = floodFill(width, height, clickPos[0], clickPos[1], numbers, mask);\r\n        flags = updateFlags(width, height, flags, mask);\r\n        update(width, height, mask, flags, numbers);\r\n    }\r\n}\r\n\r\nfunction gridSum(width, height, grid) {\r\n    let n = 0;\r\n    for (let y = 0; y < height; y++) {\r\n        for (let x = 0; x < width; x++) {\r\n            n += grid[y][x];\r\n        }\r\n    }\r\n    return n;\r\n}\r\n\r\nfunction update(width, height, mask, flags, numbers) {\r\n    numFlags = gridSum(width, height, flags);\r\n    remainingMines = Math.max(0, initialMines - numFlags);\r\n    updateMines(remainingMines);\r\n    updateGrid(width, height, mask, flags, numbers);\r\n}\r\n\r\nexport function rightClick(width, height, event) {\r\n    if (event.target.className == \"cell\") {\r\n        let cell = event.target;\r\n        event.preventDefault();\r\n        let clickPos = getXY(cell.id);\r\n        let x = clickPos[0];\r\n        let y = clickPos[1];\r\n        flags[y][x] = (1 - mask[y][x]) & (1 - flags[y][x]);\r\n        update(width, height, mask, flags, numbers);\r\n    }\r\n}\r\n\r\nexport function gameSetup(widthInp, heightInp, minesInp) {\r\n    initialMines = minesInp;\r\n    let board = generateGrid(widthInp, heightInp);\r\n    numbers = generateGrid(widthInp, heightInp);\r\n    mask = generateGrid(widthInp, heightInp);\r\n    flags = generateGrid(widthInp, heightInp);\r\n\r\n    createGrid(widthInp, heightInp);\r\n    updateGrid(widthInp, heightInp, mask, flags, numbers);\r\n    updateMines(remainingMines);\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/game.js b/game.js
+--- a/game.js	
++++ b/game.js	
+@@ -1,7 +1,7 @@
+-import {createGrid} from '/NSI-Project/render.js';
+-import {updateGrid} from '/NSI-Project/render.js';
+-import {updateMines} from '/NSI-Project/render.js';
+-import {incrementTimer} from '/NSI-Project/render.js';
++import {createGrid} from './render.js';
++import {updateGrid} from './render.js';
++import {updateMines} from './render.js';
++import {incrementTimer} from './render.js';
+ 
+ const dX = [1, 1, 0, -1, -1, -1, 0, 1];
+ const dY = [0, 1, 1, 1, 0, -1, -1, -1];

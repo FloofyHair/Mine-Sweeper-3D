@@ -12,13 +12,18 @@
 //     "8": "#FFC6FF",
 //     "U": "#FFFFFF",
 // }
-document.addEventListener("DOMContentLoaded", function() {
-    document.body.addEventListener("click", (cell)=>{click(width, height, cell)});
-    document.body.addEventListener("contextmenu", (cell)=>{rightClick(width, height, cell)});
-  });
+document.addEventListener("DOMContentLoaded", function () {
+    document.body.addEventListener("click", (cell) => {
+        click(width, height, cell)
+    });
+    document.body.addEventListener("contextmenu", (cell) => {
+        rightClick(width, height, cell)
+    });
+});
 
 
 timerValue = 0;
+
 function incrementTimer() {
     timer = document.getElementById("timer-digits");
     timerValue++;
@@ -33,16 +38,17 @@ function updateMines(minesValue) {
     mines = document.getElementById("mines");
     digits = mines.children;
 
-    ones = Math.floor(minesValue/1)%10;
-    tens = Math.floor(minesValue/10)%10;
-  
+    ones = Math.floor(minesValue / 1) % 10;
+    tens = Math.floor(minesValue / 10) % 10;
+
     //console.log(`${minesValue}, ${ones}, ${tens}`);
-  
+
     digits[0].style.transform = `translate(0, ${ones * -5.9}rem)`;
     digits[1].style.transform = `translate(0, ${tens * -5.9}rem)`;
 }
 
 function updateGrid(width, height, mask, flags, values) {
+
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
             const cell = document.getElementById(x + ";" + y);
@@ -56,16 +62,13 @@ function updateGrid(width, height, mask, flags, values) {
 }
 
 
-
 // Create Minesweeper Grid
 function createGrid(width, height, mines) {
     // Ensure height is less than width
-    if (height > width) {
-        [height, width] = [width, height];
-    }
 
     // Set grid aspect ratio
     const grid = document.getElementById("grid");
+    grid.innerHTML = '';
     grid.style.aspectRatio = width + "/" + height;
 
 
@@ -81,9 +84,11 @@ function createGrid(width, height, mines) {
             cell.className = "cell";
             cell.id = x + ";" + y;
 
-            cell.style.width = 100 / height + "%";
-            cell.style.fontSize = 500 / height + "px";
-            if((x+y)%2==0){
+
+            console.log(`${100 / width}%`)
+            cell.style.width = `${100 / width}%`;
+            cell.style.fontSize = 100 / width + "px";
+            if ((x + y) % 2 == 0) {
                 cell.style.opacity = 0.93;
             }
             row.appendChild(cell);
