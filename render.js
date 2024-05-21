@@ -25,7 +25,7 @@ function incrementTimer() {
     let paddedTimer = String(timerValue).padStart(3, '0');
 
     timer.innerHTML = paddedTimer;
-  
+    console.log(gameState);
     setTimeout(incrementTimer, 1000);
 }
 

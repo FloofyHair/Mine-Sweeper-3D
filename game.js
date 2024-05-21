@@ -116,6 +116,8 @@ function gameSetup(width, height){
     createGrid(width, height, numbers);
     updateGrid(width, height, mask, flags, numbers);
     updateMines(remainingMines)
+    gameState = 1;
+    firstTime = true;
 }
 
 function getXY(string){
@@ -131,7 +133,7 @@ function updateFlags(width, height, flags, mask){
     }
     return newFlags
 }
-firstTime = true;
+
 
 function onFirstClick(width, height, cell){
     clickPos = getXY(cell.id);
@@ -161,10 +163,26 @@ function click(width, height, event) {
             onFirstClick(width, height, cell)
         }
         clickPos = getXY(cell.id);
+        if(flags[clickPos[1]][clickPos[0]]){
+            return
+        }
         mask = floodFill(width, height, clickPos[0], clickPos[1], numbers, mask);
         flags = updateFlags(width, height, flags, mask);
         update(width, height, mask, flags, numbers);
-}
+        console.log(board);
+        if(board[clickPos[1]][clickPos[0]]==1){
+            gameState = 3;
+            updateMenu();
+            return;
+        }
+        console.log(gridSum(width, height, mask))
+        if(gridSum(width, height, mask)==(width*height - initialMines)){
+            gameState = 2;
+            updateMenu();
+            return;
+        }
+        
+    }
 }
 function gridSum(width, height, grid){
     let n = 0
@@ -175,6 +193,7 @@ function gridSum(width, height, grid){
     }
     return n
 }
+
 
 function update(width, height, mask, flags, numbers){
     numFlags = gridSum(width, height, flags)
@@ -194,4 +213,3 @@ function rightClick(width, height, event){
         update(width, height, mask, flags, numbers);
     }
 }
-

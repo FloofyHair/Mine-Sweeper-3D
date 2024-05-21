@@ -84,21 +84,38 @@ body {
 
 
 #menu {
+  display: none;
   position: absolute;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
+  backdrop-filter: none;
   z-index: 10;
+  transition: backdrop-filter 2s ease;
+  -webkit-transition: backdrop-filter 2s ease;
+  -moz-transition: backdrop-filter 2s ease;
+  -ms-transition: backdrop-filter 2s ease;
+  -o-transition: backdrop-filter 2s ease;
 }
 
-#menu-title {
+#menu.toggled{
+  display: block;
+  backdrop-filter: blur(10px);
+}
+
+#menu-title, #feedback-text {
   position: absolute;
-  top: 10%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 3rem;
   font-family: "Lexend Deca","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+#menu-title{
+  top: 10%;
+}
+#feedback-text{
+  top: 20%
 }
 
 #menu-buttons {
