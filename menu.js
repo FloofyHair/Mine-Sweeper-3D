@@ -20,6 +20,7 @@ function getIntVal(elementName) {
 }
 
 function formSubmit() {
+  gameState = 0;
   widthInp = getIntVal("widthInput");
   heightInp = getIntVal("heightInput");
   minesInp = getIntVal("minesInput");

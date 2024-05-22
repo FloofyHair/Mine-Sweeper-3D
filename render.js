@@ -1,17 +1,3 @@
-// colorMap = {
-//     "-1": "#FFFFFF",
-//     "0": "#000012",
-//     // "0": "#FFFFFF",
-//     "1": "#FFADAD",
-//     "2": "#FFD6A5",
-//     "3": "#FDFEB6",
-//     "4": "#CAFFBF",
-//     "5": "#9BF6FF",
-//     "6": "#A0C4FF",
-//     "7": "#BDB2FF",
-//     "8": "#FFC6FF",
-//     "U": "#FFFFFF",
-// }
 document.addEventListener("DOMContentLoaded", function () {
   document.body.addEventListener("click", (cell) => {
     click(width, height, cell);
