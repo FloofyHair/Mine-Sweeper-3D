@@ -67,22 +67,6 @@ function numNeighbors(grid, width, height, x, y) {
   return num;
 }
 
-function logB(board) {
-  board.forEach((row) => {
-    let x = "";
-    row.forEach((n) => {
-      if (n == -1) {
-        x += "X";
-      } else {
-        x += n;
-      }
-      x += " ";
-    });
-    console.log(x);
-  });
-  console.log();
-}
-
 function floodFill(width, height, x, y, numbers, old_mask) {
   var mask = generateGrid(width, height);
   var queue = [[x, y]];

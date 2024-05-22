@@ -1,17 +1,3 @@
-// colorMap = {
-//     "-1": "#FFFFFF",
-//     "0": "#000012",
-//     // "0": "#FFFFFF",
-//     "1": "#FFADAD",
-//     "2": "#FFD6A5",
-//     "3": "#FDFEB6",
-//     "4": "#CAFFBF",
-//     "5": "#9BF6FF",
-//     "6": "#A0C4FF",
-//     "7": "#BDB2FF",
-//     "8": "#FFC6FF",
-//     "U": "#FFFFFF",
-// }
 document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("click", (cell) => {
         click(width, height, cell);
@@ -44,6 +30,7 @@ function updateMines(minesValue) {
     ones = Math.floor(minesValue / 1) % 10;
     tens = Math.floor(minesValue / 10) % 10;
 
+<<<<<<< HEAD
     //console.log(`${minesValue}, ${ones}, ${tens}`);
 
     digits[0].style.transform = `translate(0, ${ones * -5.9}rem)`;
@@ -60,6 +47,19 @@ function updateGrid(width, height, mask, flags, values) {
             // cell.innerHTML = cell.tileType
             // cell.style.color = colorMap[cell.inn erHTML];
         }
+=======
+  digits[0].style.transform = `translate(0, ${ones * -5.9}rem)`;
+  digits[1].style.transform = `translate(0, ${tens * -5.9}rem)`;
+}
+
+function updateGrid(width, height, mask, flags, values) {
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const cell = document.getElementById(x + ";" + y);
+      let tileType = mask[y][x] & 1 ? values[y][x] : "U";
+      tileType = flags[y][x] & 1 ? "F" : tileType;
+      cell.style.backgroundImage = `url(Sprites/${tileType}.png)`;
+>>>>>>> 693c252d0b120d750084be5300e1c7672034fd81
     }
 }
 
