@@ -30,8 +30,6 @@ function updateMines(minesValue) {
   ones = Math.floor(minesValue / 1) % 10;
   tens = Math.floor(minesValue / 10) % 10;
 
-  //console.log(`${minesValue}, ${ones}, ${tens}`);
-
   digits[0].style.transform = `translate(0, ${ones * -5.9}rem)`;
   digits[1].style.transform = `translate(0, ${tens * -5.9}rem)`;
 }
@@ -43,8 +41,6 @@ function updateGrid(width, height, mask, flags, values) {
       let tileType = mask[y][x] & 1 ? values[y][x] : "U";
       tileType = flags[y][x] & 1 ? "F" : tileType;
       cell.style.backgroundImage = `url(Sprites/${tileType}.png)`;
-      // cell.innerHTML = cell.tileType
-      // cell.style.color = colorMap[cell.innerHTML];
     }
   }
 }
