@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85bd9d48-f365-49c8-8007-db4ef6381b88" name="Changes" comment="Making javascript to module">
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/render.js" beforeDir="false" afterPath="$PROJECT_DIR$/render.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/menu.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +106,8 @@
       <workItem from="1716072826129" duration="17000" />
       <workItem from="1716225183729" duration="2606000" />
       <workItem from="1716239629777" duration="2077000" />
-      <workItem from="1716313352697" duration="1256000" />
+      <workItem from="1716313352697" duration="1718000" />
+      <workItem from="1716344532567" duration="5302000" />
     </task>
     <task id="LOCAL-00001" summary="Added title and fixed label">
       <option name="closed" value="true" />
